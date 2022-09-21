@@ -1,0 +1,33 @@
+---
+- hosts: raspberryPicturePIs
+  become: true
+  become_user: root
+
+  tasks:
+    - name: Turn off Screen Blanking
+      register: setterm
+      command: "setterm -powersave off -blank 0"
+
+    - name: copy sync script
+      copy:
+        src: /home/caboose/ansible/files/sync.sh
+        dest: /home/caboose
+        mode: '0777'
+        group: 'caboose'
+        owner: 'caboose'
+
+    - name: copy wpa_files
+      copy:
+        src: /home/caboose/ansible/files/wpa_supplicant.conf
+        dest: /etc/wpa_supplicant/wpa_supplicant.conf
+        mode: '0644'
+        group: 'root'
+        owner: 'root'
+
+    - name: copy network_interface_files
+      copy:
+        src: /home/caboose/ansible/files/interfaces
+        dest: /etc/network/interfaces
+        mode: '0644'
+        group: 'root'
+        owner: 'root'

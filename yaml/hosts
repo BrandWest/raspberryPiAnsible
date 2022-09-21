@@ -1,0 +1,13 @@
+[raspberryPicturePIs]
+pi_0 ansible_host=10.0.0.241
+pi_1 ansible_host=10.0.0.239
+pi_2 ansible_host=10.0.0.242
+pi_3 ansible_host=10.0.0.244 
+pi_4 ansible_host=10.0.0.240
+
+[all:vars]
+ansible_user='caboose'
+ansible_become=yes
+ansible_become_method=sudo
+ansible_python_interpreter='/usr/bin/env python3'
+

@@ -1,0 +1,77 @@
+---
+- hosts: raspberryPicturePIs
+  become: true
+  become_user: root
+  vars:
+    vault: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      30616231623037386461313765393665383032323336623832653430303363333566643966663334
+      3233663739306265346237666333373665613164613837360a393066616330623438316532323131
+      37653561396531353333336439646365313631663363303332616561646335626538393663656165
+      6136313535396631370a383331613931343333343735323262323539343237363032316163633835
+      3734
+  tasks:
+    - name: Check the device update status
+      remote_user: caboose
+      apt: 
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+    - name: Upgrade PI packages
+      apt: 
+        upgrade: dist
+        force_apt_get: yes
+
+    - name: Auto Remove and clean
+      remote_user: "caboose"
+      apt:
+        autoclean: yes
+        autoremove: yes
+
+    - name: Install dependencies
+      apt:
+        state: present
+        name: 
+          - git
+          - snapd
+          - feh
+          - xscreensaver
+          - rclone
+          - raspberrypi-kernel-headers
+
+    - name: Run snapd
+      community.general.snap: 
+        state: present
+        name:
+          - core
+          - gphotos-sync
+              
+    - name: Reboot the machine
+      shell: "sleep 5 && reboot"
+
+      async: 1
+      poll: 0
+
+    - name: Wait for the machine to come back online
+      wait_for_connection:
+        connect_timeout: 60
+        sleep: 5
+        delay: 5
+        timeout: 300
+
+
+
+    - name: Check for reboot
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required get_md5=no
+
+    - name: Reboot if the kenerl was updated
+      reboot:
+        msg: "Reboot initiated by Ansible for kernel updates"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: reboot_required_file.stat.exists
