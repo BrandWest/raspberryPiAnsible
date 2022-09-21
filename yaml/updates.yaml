@@ -2,12 +2,6 @@
 - hosts: raspberryPicturePIs
   become: true
   become_user: root
-<<<<<<< Updated upstream
-  vars:
-    vault: !vault |
-      $ANSIBLE_VAULT;1.1;AES256
-=======
->>>>>>> Stashed changes
 
   tasks:
     - name: Check the device update status
