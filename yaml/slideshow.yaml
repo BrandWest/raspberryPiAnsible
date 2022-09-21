@@ -1,18 +1,16 @@
 ---
 - hosts: raspberryPicturePIs
   become: true
-  become_user: caboose
-  vars:
-    vault: !vault |
-      $ANSIBLE_VAULT;1.1;AES256
+  become_user: <user>
+
   tasks:
     - name: Create a directory if it does not exist
       ansible.builtin.file:
-        path: /home/caboose/pictures
+        path: /home/<user>/pictures
         state: directory
         mode: '0775'
-        group: 'caboose'
-        owner: 'caboose'
+        group: '<user>'
+        owner: '<user>'
 
     - name: run sync
-      script: /home/caboose/sync.sh
+      script: /home/<user>/sync.sh

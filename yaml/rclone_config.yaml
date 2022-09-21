@@ -5,14 +5,14 @@
       ansible.builtin.cron:
         name: "Sync Dir"
         special_time: daily
-        user: "caboose"
-        job: "/home/caboose/sync.sh"
+        user: "<user>"
+        job: "/home/<user>/sync.sh"
 
     - name: "Set Crontab for rebooting"
       ansible.builtin.cron:
         name: "Reboot"
         special_time: daily
-        user: "caboose"
+        user: "<user>"
         job: "sudo reboot"
 
 
@@ -24,19 +24,19 @@
         hour: "12"
         day: "*"
         month: "*"
-        user: "caboose"
+        user: "<user>"
         job: "sudo apt-get update && sudo apt-get upgrade -y"
 
     - name: "Set Crontab to restart slideshow on reboot"
       ansible.builtin.cron:
         name: "Slideshow autostart"
         special_time: reboot
-        user: "caboose"
-        job: "sleep 120; DISPLAY=:0 feh -Y -x -q --auto-rotate -D 30 -B black -F -Z -z -r /home/caboose/pictures"
+        user: "<user>"
+        job: "sleep 120; DISPLAY=:0 feh -Y -x -q --auto-rotate -D 30 -B black -F -Z -z -r /home/<user>/pictures"
 
     - name: "Set screen direction"
       ansible.builtin.cron:
         name: "Screen vertical"
         special_time: reboot
-        user: "caboose"
+        user: "<user>"
         job: "sleep 120; DISPLAY=:0 xrandr --output HDMI-1 --rotate right"

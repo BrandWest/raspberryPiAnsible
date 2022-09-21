@@ -2,13 +2,16 @@
 - hosts: raspberryPicturePIs
   become: true
   become_user: root
+<<<<<<< Updated upstream
   vars:
     vault: !vault |
       $ANSIBLE_VAULT;1.1;AES256
+=======
+>>>>>>> Stashed changes
 
   tasks:
     - name: Check the device update status
-      remote_user: caboose
+      remote_user: <user>
       apt: 
         update_cache: yes
         force_apt_get: yes
@@ -20,7 +23,7 @@
         force_apt_get: yes
 
     - name: Auto Remove and clean
-      remote_user: "caboose"
+      remote_user: "<user>"
       apt:
         autoclean: yes
         autoremove: yes

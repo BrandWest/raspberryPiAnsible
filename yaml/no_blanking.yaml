@@ -11,7 +11,11 @@
     - name: copy sync script
       copy:
         src: /home/<user>/ansible/files/sync.sh
+<<<<<<< Updated upstream
         dest: /home/<remote user>
+=======
+        dest: /home/<user>
+>>>>>>> Stashed changes
         mode: '0777'
         group: '<user>'
         owner: '<user>'
