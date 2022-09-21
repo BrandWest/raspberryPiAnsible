@@ -10,15 +10,15 @@
 
     - name: copy sync script
       copy:
-        src: /home/caboose/ansible/files/sync.sh
-        dest: /home/caboose
+        src: /home/<user>/ansible/files/sync.sh
+        dest: /home/<remote user>
         mode: '0777'
-        group: 'caboose'
-        owner: 'caboose'
+        group: '<user>'
+        owner: '<user>'
 
     - name: copy wpa_files
       copy:
-        src: /home/caboose/ansible/files/wpa_supplicant.conf
+        src: /home/<user>/ansible/files/wpa_supplicant.conf
         dest: /etc/wpa_supplicant/wpa_supplicant.conf
         mode: '0644'
         group: 'root'
@@ -26,7 +26,7 @@
 
     - name: copy network_interface_files
       copy:
-        src: /home/caboose/ansible/files/interfaces
+        src: /home/<user>/ansible/files/interfaces
         dest: /etc/network/interfaces
         mode: '0644'
         group: 'root'
