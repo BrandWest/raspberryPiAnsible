@@ -31,7 +31,7 @@ Run the Ansible Playbooks
 
 Create the rclone config files on each device by:
 1. Open terminal on the remote machine
-2. rclone config
+2. `rclone config`
 3. new remote (n)
 3.a) give the repo a name
 4. storage (13 for goolge drive)
